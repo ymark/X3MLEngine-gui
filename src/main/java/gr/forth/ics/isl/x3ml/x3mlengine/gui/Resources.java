@@ -12,6 +12,7 @@ public class Resources {
     public static final String GUI_LABELS_DEFAULT="Default";
     public static final String GUI_LABELS_RUNNING="Running";
     public static final String GUI_LABELS_TRANSFORM="Transform";
+    public static final String GUI_LABELS_ERROR="Error";
     
     /* GUI supplementary resoruces */
     public static final String RDF="RDF";
