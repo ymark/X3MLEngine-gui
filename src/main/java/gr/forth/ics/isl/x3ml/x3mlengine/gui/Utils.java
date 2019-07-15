@@ -5,7 +5,6 @@ import com.google.common.collect.Multimap;
 import gr.forth.ics.isl.x3ml.x3mlengine.gui.exception.GenericException;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import javax.xml.parsers.DocumentBuilder;
