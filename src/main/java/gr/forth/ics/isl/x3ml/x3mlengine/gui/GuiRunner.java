@@ -6,7 +6,6 @@
 package gr.forth.ics.isl.x3ml.x3mlengine.gui;
 
 import com.google.common.collect.Multimap;
-import gr.forth.ics.isl.x3ml.X3MLEngine;
 import java.io.File;
 import java.util.stream.Collectors;
 import lombok.extern.log4j.Log4j;
@@ -73,7 +72,9 @@ public class GuiRunner extends javax.swing.JDialog {
         titlePanel.setToolTipText("");
         titlePanel.setName(""); // NOI18N
 
-        titleLabel.setText("Title");
+        titleLabel.setFont(new java.awt.Font("Dialog", 3, 24)); // NOI18N
+        titleLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gr/forth/ics/isl/x3ml/x3mlengine/icons/X3ML-Engine-log_small.png"))); // NOI18N
+        titleLabel.setText("  X3ML Engine");
 
         javax.swing.GroupLayout titlePanelLayout = new javax.swing.GroupLayout(titlePanel);
         titlePanel.setLayout(titlePanelLayout);
@@ -91,8 +92,10 @@ public class GuiRunner extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        loadedFilesLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         loadedFilesLabel.setText("Loaded Files");
 
+        loadFilesButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         loadFilesButton.setText("Load Files");
         loadFilesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,10 +103,13 @@ public class GuiRunner extends javax.swing.JDialog {
             }
         });
 
+        uuidSizeLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         uuidSizeLabel.setText("UUID Size:");
 
+        uuidSizeTextField.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         uuidSizeTextField.setText("Default");
 
+        outputLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         outputLabel.setText("Output:");
 
         outputFormatComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "RDF", "N3", "TRIG", "TURTLE" }));
@@ -115,6 +121,7 @@ public class GuiRunner extends javax.swing.JDialog {
             }
         });
 
+        transformButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         transformButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gr/forth/ics/isl/x3ml/x3mlengine/icons/gears.png"))); // NOI18N
         transformButton.setText("Transform");
         transformButton.setEnabled(false);
@@ -127,6 +134,7 @@ public class GuiRunner extends javax.swing.JDialog {
         loadedFilesPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         loadedFilesTextLabel.setBackground(new java.awt.Color(255, 255, 255));
+        loadedFilesTextLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         loadedFilesTextLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         javax.swing.GroupLayout loadedFilesPanelLayout = new javax.swing.GroupLayout(loadedFilesPanel);
@@ -144,6 +152,7 @@ public class GuiRunner extends javax.swing.JDialog {
 
         loadedFilesTextLabel.getAccessibleContext().setAccessibleName("text");
 
+        showErrorsCheckBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         showErrorsCheckBox.setText("Show Errors");
         showErrorsCheckBox.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         showErrorsCheckBox.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
@@ -197,26 +206,26 @@ public class GuiRunner extends javax.swing.JDialog {
                         .addComponent(uuidSizeLabel)
                         .addComponent(uuidSizeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(loadFilesButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(dataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(outputLabel)
                     .addComponent(outputFormatComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(outputFolderTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(outputFolderBrowseButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(dataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(dataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(transformButton)
                     .addComponent(showErrorsCheckBox)))
         );
 
+        resultsLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         resultsLabel.setText("Ready...");
         resultsLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         resultsPanel.setViewportView(resultsLabel);
 
         fileMenu.setText("File");
-        fileMenu.setEnabled(false);
 
-        clearMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, 0));
+        clearMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         clearMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gr/forth/ics/isl/x3ml/x3mlengine/icons/erase.png"))); // NOI18N
         clearMenuItem.setText("Clear");
         clearMenuItem.setToolTipText("");
@@ -227,9 +236,10 @@ public class GuiRunner extends javax.swing.JDialog {
         });
         fileMenu.add(clearMenuItem);
 
-        transformMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, 0));
+        transformMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
         transformMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gr/forth/ics/isl/x3ml/x3mlengine/icons/gears.png"))); // NOI18N
         transformMenuItem.setText("Transform");
+        transformMenuItem.setEnabled(false);
         transformMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 transformMenuItemActionPerformed(evt);
@@ -285,8 +295,8 @@ public class GuiRunner extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(dataPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(resultsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addComponent(resultsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
