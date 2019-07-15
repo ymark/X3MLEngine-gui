@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.stream.Collectors;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -41,6 +42,35 @@ public class Utils {
             }
         }
         return retMap;
+    }
+    
+    public static String beautifyFileResourcesLabels(Multimap<X3MLResourceType,Pair<File,String>> fileResources){
+        StringBuilder htmlBuilder=new StringBuilder();
+        htmlBuilder.append("<html>")
+                   .append("&bull;").append("<u>").append(X3MLResourceType.X3ML_MAPPINGS.toString()).append("</u>").append(": ");
+        if(fileResources.containsKey(X3MLResourceType.X3ML_MAPPINGS)){
+            htmlBuilder.append(fileResources.get(X3MLResourceType.X3ML_MAPPINGS).stream().map(Pair::getRight).collect(Collectors.toList())).append("<br>");
+        }else{
+            htmlBuilder.append("-").append("<br>");
+        }
+        htmlBuilder.append("&bull;").append("<u>").append(X3MLResourceType.XML_INPUT.toString()).append("</u>").append(": ");
+        if(fileResources.containsKey(X3MLResourceType.XML_INPUT)){
+            htmlBuilder.append(fileResources.get(X3MLResourceType.XML_INPUT).stream().map(Pair::getRight).collect(Collectors.toList())).append("<br>");
+        }else{
+            htmlBuilder.append("-").append("<br>");
+        }
+        htmlBuilder.append("&bull;").append("<u>").append(X3MLResourceType.GENERATOR_POLICY.toString()).append("</u>").append(": ");
+        if(fileResources.containsKey(X3MLResourceType.GENERATOR_POLICY)){
+            htmlBuilder.append(fileResources.get(X3MLResourceType.GENERATOR_POLICY).stream().map(Pair::getRight).collect(Collectors.toList())).append("<br>");
+        }else{
+            htmlBuilder.append("-").append("<br>");
+        }
+        if(fileResources.containsKey(X3MLResourceType.UNDEF)){
+            htmlBuilder.append("&bull;").append("<u>").append(X3MLResourceType.UNDEF.toString()).append("</u>").append(": ")
+                       .append(fileResources.get(X3MLResourceType.UNDEF).stream().map(Pair::getRight).collect(Collectors.toList())).append("<br>");
+        }
+        htmlBuilder.append("</html>");
+        return htmlBuilder.toString();
     }
     
     private static boolean isGeneratorPolicyFile(File file) throws GenericException{

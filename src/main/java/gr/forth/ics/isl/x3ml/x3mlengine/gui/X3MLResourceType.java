@@ -8,4 +8,19 @@ public enum X3MLResourceType {
     XML_INPUT,
     GENERATOR_POLICY,
     UNDEF ;
+    
+    @Override
+    public String toString(){
+        switch(this){
+            case X3ML_MAPPINGS:
+                return "X3ML mappings";
+            case XML_INPUT:
+                return "Input";
+            case GENERATOR_POLICY:
+                return "Generator Policy";
+            case UNDEF:
+            default:
+                return "Uknown";
+        }
+    }
 }
