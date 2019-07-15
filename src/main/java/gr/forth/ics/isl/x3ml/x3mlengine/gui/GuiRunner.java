@@ -8,12 +8,14 @@ package gr.forth.ics.isl.x3ml.x3mlengine.gui;
 import com.google.common.collect.Multimap;
 import java.io.File;
 import java.util.stream.Collectors;
+import lombok.extern.log4j.Log4j;
 import org.apache.commons.lang3.tuple.Pair;
 
 /**
  *
  * @author marketak
  */
+@Log4j
 public class GuiRunner extends javax.swing.JDialog {
     public static StringBuilder HTML_OUTPUT=new StringBuilder();
     Multimap<X3MLResourceType,Pair<File,String>> selectedResources;
@@ -129,8 +131,7 @@ public class GuiRunner extends javax.swing.JDialog {
         loadedFilesPanelLayout.setHorizontalGroup(
             loadedFilesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loadedFilesPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(loadedFilesTextLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(loadedFilesTextLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         loadedFilesPanelLayout.setVerticalGroup(
@@ -158,10 +159,10 @@ public class GuiRunner extends javax.swing.JDialog {
                                     .addComponent(uuidSizeLabel)
                                     .addComponent(outputLabel))
                                 .addGap(18, 18, 18)
-                                .addGroup(dataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(dataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(dataPanelLayout.createSequentialGroup()
                                         .addComponent(uuidSizeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(418, 418, 418)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(loadFilesButton))
                                     .addGroup(dataPanelLayout.createSequentialGroup()
                                         .addComponent(outputFormatComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -310,6 +311,11 @@ public class GuiRunner extends javax.swing.JDialog {
             public void run(){
                 while(true){
                     resultsLabel.setText("<HTML>"+GuiRunner.HTML_OUTPUT.toString().replaceAll("\n", "<BR>") +"</HTML>");
+                    try{
+                        Thread.sleep(100);
+                    }catch(InterruptedException ex){
+                        log.error("An error occured while refreshing results panel.",ex);
+                    } 
                 }
             }
         };
@@ -326,7 +332,7 @@ public class GuiRunner extends javax.swing.JDialog {
             }
         };
         
-        //timerThread.start();
+        timerThread.start();
         engineThread.start();
         
         transformButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gr/forth/ics/isl/x3ml/x3mlengine/icons/gears.png")));

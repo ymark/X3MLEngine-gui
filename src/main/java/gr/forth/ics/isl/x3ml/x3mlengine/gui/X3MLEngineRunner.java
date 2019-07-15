@@ -43,7 +43,7 @@ public class X3MLEngineRunner {
             default:
                 String errorLabel="Unable to identify output format with string value ("+outputFormatStr+"). Using "+Resources.RDF+" output format.";
                 log.error(errorLabel);
-                GuiRunner.HTML_OUTPUT.append("<ul>&bull;").append(Resources.GUI_LABELS_ERROR).append(": ").append("</ul>").append(errorLabel).append("\n");
+                GuiRunner.HTML_OUTPUT.append("<u>&bull;").append(Resources.GUI_LABELS_ERROR).append(": ").append("</u>").append(errorLabel).append("\n");
                 return X3MLEngineFactory.OutputFormat.RDF_XML;
         }
     }
@@ -51,13 +51,15 @@ public class X3MLEngineRunner {
     private int identifyUuidSize(String uuidSizeStr){
         if(uuidSizeStr.equalsIgnoreCase(Resources.GUI_LABELS_DEFAULT)){
             return -1;
-        }
-        try{
-            return Integer.parseInt(uuidSizeStr);
-        }catch(NumberFormatException ex){
-            String errorLabel="Unable to identify UUID size value ("+uuidSizeStr+"). Using the Default value ("+Resources.GUI_LABELS_DEFAULT+").";
-            GuiRunner.HTML_OUTPUT.append("<ul>&bull;").append(Resources.GUI_LABELS_ERROR).append(": ").append("</ul>").append(errorLabel).append("\n");
-            return -1;
+        }else{
+            try{
+                return Integer.parseInt(uuidSizeStr);
+            }catch(NumberFormatException ex){
+                String errorLabel="Unable to identify UUID size value ("+uuidSizeStr+"). Using the Default value.";
+                log.error(errorLabel);
+                GuiRunner.HTML_OUTPUT.append("<u>&bull;").append(Resources.GUI_LABELS_ERROR).append(": ").append("</u>").append(errorLabel).append("\n");
+                return -1;
+            }
         }
     }
 }
