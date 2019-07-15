@@ -62,4 +62,46 @@ public class X3MLEngineRunner {
             }
         }
     }
+    
+    public void run(){
+        GuiRunner.HTML_OUTPUT.append("Creating X3ML Engine instance\n");
+        X3MLEngineFactory engineFactory=X3MLEngineFactory.create();
+        
+        GuiRunner.HTML_OUTPUT.append("Loading Resources to Engine\n");
+        engineFactory.withInputFiles(this.inputFiles)
+                     .withMappings(this.mappings)
+                     .withGeneratorPolicy(this.generatorPolicyFile)
+                     .withUuidSize(this.uuidSize)
+                     .withOutput(this.generateOutputFilePath(), this.outputFormat);
+        
+        GuiRunner.HTML_OUTPUT.append("Transforming Data\n");
+        engineFactory.execute();
+        
+        GuiRunner.HTML_OUTPUT.append("Finished Transformation\n");
+    }
+    
+    private String generateOutputFilePath(){
+        StringBuilder outputPathBuilder=new StringBuilder();
+        if(!this.outputFolder.isBlank()){
+            outputPathBuilder.append(this.outputFolder)
+                             .append("\\");
+        }
+        outputPathBuilder.append(Resources.OUTPUT).append(".");
+        switch(this.outputFormat){
+            case RDF_XML: 
+            case RDF_XML_PLAIN:
+                outputPathBuilder.append(Resources.FILE_EXTENSION_RDF);
+                break;
+            case NTRIPLES:
+                outputPathBuilder.append(Resources.FILE_EXTENSION_N3);
+                break;
+            case TRIG:
+                outputPathBuilder.append(Resources.FILE_EXTENSION_TRIG);
+                break;
+            case TURTLE:
+                outputPathBuilder.append(Resources.FILE_EXTENSION_TURTLE);
+                break;
+        }
+        return outputPathBuilder.toString();
+    }
 }

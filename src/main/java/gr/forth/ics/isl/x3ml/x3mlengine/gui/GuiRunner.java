@@ -326,17 +326,16 @@ public class GuiRunner extends javax.swing.JDialog {
                 X3MLEngineRunner engineRunner=new X3MLEngineRunner(selectedResources.get(X3MLResourceType.X3ML_MAPPINGS).stream().map(Pair::getLeft).collect(Collectors.toList()),
                                                                    selectedResources.get(X3MLResourceType.XML_INPUT).stream().map(Pair::getLeft).collect(Collectors.toList()), 
                                                                    selectedResources.get(X3MLResourceType.GENERATOR_POLICY).stream().map(Pair::getLeft).findFirst().get(),
-                                                                   outputFolderTextField.getSelectedText(),
+                                                                   outputFolderTextField.getText(),
                                                                    outputFormatComboBox.getSelectedItem().toString(),
                                                                    uuidSizeTextField.getText());
+                engineRunner.run();
+                transformButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gr/forth/ics/isl/x3ml/x3mlengine/icons/gears.png")));
+                transformButton.setText(Resources.GUI_LABELS_TRANSFORM);
             }
         };
-        
         timerThread.start();
         engineThread.start();
-        
-        transformButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gr/forth/ics/isl/x3ml/x3mlengine/icons/gears.png")));
-        transformButton.setText(Resources.GUI_LABELS_TRANSFORM);
     }//GEN-LAST:event_transformButtonActionPerformed
 
     private void loadFilesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadFilesButtonActionPerformed

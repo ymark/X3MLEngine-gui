@@ -14,11 +14,18 @@ public class Resources {
     public static final String GUI_LABELS_TRANSFORM="Transform";
     public static final String GUI_LABELS_ERROR="Error";
     
-    /* GUI supplementary resoruces */
+    /* GUI supplementary resources */
     public static final String RDF="RDF";
     public static final String N3="N3";
     public static final String NTRIPLES="NTRIPLES";
     public static final String TRIG="TRIG";
     public static final String TURTLE="TURTLE";
     
+    public static final String FILE_EXTENSION_RDF="rdf";
+    public static final String FILE_EXTENSION_N3="n3";
+    public static final String FILE_EXTENSION_TRIG="trig";
+    public static final String FILE_EXTENSION_TURTLE="ttl";
+ 
+    /* X3ML Resources */
+    public static final String OUTPUT="output";
 }
