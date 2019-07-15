@@ -1,5 +1,6 @@
 package gr.forth.ics.isl.x3ml.x3mlengine.gui;
 
+import gr.forth.ics.isl.x3ml.X3MLEngine;
 import gr.forth.ics.isl.x3ml.X3MLEngineFactory;
 import java.io.File;
 import java.util.Collection;
@@ -17,16 +18,16 @@ public class X3MLEngineRunner {
     private final String outputFolder;
     private final X3MLEngineFactory.OutputFormat outputFormat;
     private final int uuidSize;
+    private boolean showErrors;
     
-    public X3MLEngineRunner(Collection<File> mappings, Collection<File> inputFiles, File generatorPolicyFile, String outputFolder, String outputFormat, String uuidSize){
+    public X3MLEngineRunner(Collection<File> mappings, Collection<File> inputFiles, File generatorPolicyFile, String outputFolder, String outputFormat, String uuidSize, boolean showErrorsOnOutput){
         this.mappings=mappings;
         this.inputFiles=inputFiles;
         this.generatorPolicyFile=generatorPolicyFile;
         this.outputFolder=outputFolder;
         this.outputFormat=this.identifyOutputFormat(outputFormat);
         this.uuidSize=this.identifyUuidSize(uuidSize);
-        
-        System.out.println(this);
+        this.showErrors=showErrorsOnOutput;
     }
     
     private X3MLEngineFactory.OutputFormat identifyOutputFormat(String outputFormatStr){
@@ -76,7 +77,9 @@ public class X3MLEngineRunner {
         
         GuiRunner.HTML_OUTPUT.append("Transforming Data\n");
         engineFactory.execute();
-        
+        if(this.showErrors){
+            GuiRunner.HTML_OUTPUT.append(X3MLEngine.exceptionMessagesList).append("\n");
+        }
         GuiRunner.HTML_OUTPUT.append("Finished Transformation\n");
     }
     

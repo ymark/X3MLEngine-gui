@@ -6,6 +6,7 @@
 package gr.forth.ics.isl.x3ml.x3mlengine.gui;
 
 import com.google.common.collect.Multimap;
+import gr.forth.ics.isl.x3ml.X3MLEngine;
 import java.io.File;
 import java.util.stream.Collectors;
 import lombok.extern.log4j.Log4j;
@@ -50,6 +51,7 @@ public class GuiRunner extends javax.swing.JDialog {
         transformButton = new javax.swing.JButton();
         loadedFilesPanel = new javax.swing.JPanel();
         loadedFilesTextLabel = new javax.swing.JLabel();
+        showErrorsCheckBox = new javax.swing.JCheckBox();
         resultsPanel = new javax.swing.JScrollPane();
         resultsLabel = new javax.swing.JLabel();
         mainMenuBar = new javax.swing.JMenuBar();
@@ -141,6 +143,10 @@ public class GuiRunner extends javax.swing.JDialog {
 
         loadedFilesTextLabel.getAccessibleContext().setAccessibleName("text");
 
+        showErrorsCheckBox.setText("Show Errors");
+        showErrorsCheckBox.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        showErrorsCheckBox.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+
         javax.swing.GroupLayout dataPanelLayout = new javax.swing.GroupLayout(dataPanel);
         dataPanel.setLayout(dataPanelLayout);
         dataPanelLayout.setHorizontalGroup(
@@ -153,7 +159,7 @@ public class GuiRunner extends javax.swing.JDialog {
                         .addComponent(loadedFilesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dataPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(dataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(dataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dataPanelLayout.createSequentialGroup()
                                 .addGroup(dataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(uuidSizeLabel)
@@ -170,7 +176,10 @@ public class GuiRunner extends javax.swing.JDialog {
                                         .addComponent(outputFolderTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(outputFolderBrowseButton))))
-                            .addComponent(transformButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dataPanelLayout.createSequentialGroup()
+                                .addComponent(showErrorsCheckBox)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(transformButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         dataPanelLayout.setVerticalGroup(
@@ -194,7 +203,9 @@ public class GuiRunner extends javax.swing.JDialog {
                     .addComponent(outputFolderTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(outputFolderBrowseButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(transformButton))
+                .addGroup(dataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(transformButton)
+                    .addComponent(showErrorsCheckBox)))
         );
 
         resultsLabel.setText("Ready...");
@@ -304,6 +315,8 @@ public class GuiRunner extends javax.swing.JDialog {
     private void transformButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transformButtonActionPerformed
         transformButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gr/forth/ics/isl/x3ml/x3mlengine/icons/status_running.gif")));
         transformButton.setText(Resources.GUI_LABELS_RUNNING);
+        transformButton.setEnabled(false);
+        GuiRunner.HTML_OUTPUT=new StringBuilder();
         resultsLabel.setText("");
         
         Thread timerThread=new Thread(){
@@ -328,10 +341,12 @@ public class GuiRunner extends javax.swing.JDialog {
                                                                    selectedResources.get(X3MLResourceType.GENERATOR_POLICY).stream().map(Pair::getLeft).findFirst().get(),
                                                                    outputFolderTextField.getText(),
                                                                    outputFormatComboBox.getSelectedItem().toString(),
-                                                                   uuidSizeTextField.getText());
+                                                                   uuidSizeTextField.getText(),
+                                                                   showErrorsCheckBox.isSelected());
                 engineRunner.run();
                 transformButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gr/forth/ics/isl/x3ml/x3mlengine/icons/gears.png")));
                 transformButton.setText(Resources.GUI_LABELS_TRANSFORM);
+                transformButton.setEnabled(true);
             }
         };
         timerThread.start();
@@ -409,6 +424,7 @@ public class GuiRunner extends javax.swing.JDialog {
     private javax.swing.JLabel outputLabel;
     private javax.swing.JLabel resultsLabel;
     private javax.swing.JScrollPane resultsPanel;
+    private javax.swing.JCheckBox showErrorsCheckBox;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JPanel titlePanel;
     private javax.swing.JButton transformButton;
