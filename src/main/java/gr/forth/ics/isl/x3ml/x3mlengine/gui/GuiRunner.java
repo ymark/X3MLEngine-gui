@@ -7,6 +7,7 @@ package gr.forth.ics.isl.x3ml.x3mlengine.gui;
 
 import com.google.common.collect.Multimap;
 import java.io.File;
+import java.util.stream.Collectors;
 import org.apache.commons.lang3.tuple.Pair;
 
 /**
@@ -14,7 +15,8 @@ import org.apache.commons.lang3.tuple.Pair;
  * @author marketak
  */
 public class GuiRunner extends javax.swing.JDialog {
-
+    public static StringBuilder HTML_OUTPUT=new StringBuilder();
+    Multimap<X3MLResourceType,Pair<File,String>> selectedResources;
     /**
      * Creates new form GuiRunner
      */
@@ -100,7 +102,7 @@ public class GuiRunner extends javax.swing.JDialog {
 
         outputLabel.setText("Output:");
 
-        outputFormatComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "RDF", "N3", "TRIG" }));
+        outputFormatComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "RDF", "N3", "TRIG", "TURTLE" }));
 
         outputFolderBrowseButton.setText("...");
         outputFolderBrowseButton.addActionListener(new java.awt.event.ActionListener() {
@@ -286,7 +288,7 @@ public class GuiRunner extends javax.swing.JDialog {
 
     private void clearMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearMenuItemActionPerformed
         loadedFilesTextLabel.setText("");
-        uuidSizeTextField.setText("Default");
+        uuidSizeTextField.setText(Resources.GUI_LABELS_DEFAULT);
         outputFormatComboBox.setSelectedIndex(0);
         outputFolderTextField.setText("");
         resultsLabel.setText("");
@@ -300,13 +302,41 @@ public class GuiRunner extends javax.swing.JDialog {
 
     private void transformButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transformButtonActionPerformed
         transformButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gr/forth/ics/isl/x3ml/x3mlengine/icons/status_running.gif")));
-        transformButton.setText("Running");
+        transformButton.setText(Resources.GUI_LABELS_RUNNING);
+        resultsLabel.setText("");
+        
+        Thread timerThread=new Thread(){
+            @Override
+            public void run(){
+                while(true){
+                    resultsLabel.setText("<HTML>"+GuiRunner.HTML_OUTPUT.toString().replaceAll("\n", "<BR>") +"</HTML>");
+                }
+            }
+        };
+        
+        Thread engineThread=new Thread(){
+            @Override
+            public void run(){
+                X3MLEngineRunner engineRunner=new X3MLEngineRunner(selectedResources.get(X3MLResourceType.X3ML_MAPPINGS).stream().map(Pair::getLeft).collect(Collectors.toList()),
+                                                                   selectedResources.get(X3MLResourceType.XML_INPUT).stream().map(Pair::getLeft).collect(Collectors.toList()), 
+                                                                   selectedResources.get(X3MLResourceType.GENERATOR_POLICY).stream().map(Pair::getLeft).findFirst().get(),
+                                                                   outputFolderTextField.getSelectedText(),
+                                                                   outputFormatComboBox.getSelectedItem().toString(),
+                                                                   uuidSizeTextField.getText());
+            }
+        };
+        
+        //timerThread.start();
+        engineThread.start();
+        
+        transformButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gr/forth/ics/isl/x3ml/x3mlengine/icons/gears.png")));
+        transformButton.setText(Resources.GUI_LABELS_TRANSFORM);
     }//GEN-LAST:event_transformButtonActionPerformed
 
     private void loadFilesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadFilesButtonActionPerformed
         DirChooser dirChooser=new DirChooser(true);
-        Multimap<X3MLResourceType,Pair<File,String>> loadedFiles=Utils.identifyFileResources(dirChooser.getSelectedFiles());
-        loadedFilesTextLabel.setText(Utils.beautifyFileResourcesLabels(loadedFiles));
+        this.selectedResources=Utils.identifyFileResources(dirChooser.getSelectedFiles());
+        loadedFilesTextLabel.setText(Utils.beautifyFileResourcesLabels(this.selectedResources));
     }//GEN-LAST:event_loadFilesButtonActionPerformed
 
     private void transformMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transformMenuItemActionPerformed
