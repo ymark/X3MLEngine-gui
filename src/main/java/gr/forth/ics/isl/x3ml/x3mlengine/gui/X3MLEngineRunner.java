@@ -85,7 +85,7 @@ public class X3MLEngineRunner {
     
     private String generateOutputFilePath(){
         StringBuilder outputPathBuilder=new StringBuilder();
-        if(!this.outputFolder.isBlank()){
+        if(!this.outputFolder.isEmpty()){
             outputPathBuilder.append(this.outputFolder)
                              .append("\\");
         }
