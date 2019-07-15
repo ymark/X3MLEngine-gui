@@ -70,7 +70,6 @@ public class GuiRunner extends javax.swing.JDialog {
         setTitle("X3ML Engine");
         setLocation(new java.awt.Point(150, 150));
         setMinimumSize(new java.awt.Dimension(700, 700));
-        setPreferredSize(new java.awt.Dimension(700, 700));
         setSize(new java.awt.Dimension(700, 700));
 
         titlePanel.setToolTipText("");
@@ -85,8 +84,9 @@ public class GuiRunner extends javax.swing.JDialog {
         titlePanelLayout.setHorizontalGroup(
             titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(titlePanelLayout.createSequentialGroup()
-                .addComponent(titleLabel)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         titlePanelLayout.setVerticalGroup(
             titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -285,12 +285,11 @@ public class GuiRunner extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(titlePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(dataPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 15, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(resultsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(dataPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 647, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(resultsPanel))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
