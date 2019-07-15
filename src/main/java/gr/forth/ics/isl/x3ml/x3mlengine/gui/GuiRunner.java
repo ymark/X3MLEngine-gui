@@ -293,7 +293,9 @@ public class GuiRunner extends javax.swing.JDialog {
     }//GEN-LAST:event_clearMenuItemActionPerformed
 
     private void outputFolderBrowseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputFolderBrowseButtonActionPerformed
-        // TODO add your handling code here:
+        DirChooser dirChooser=new DirChooser(false);
+        outputFolderTextField.setText(dirChooser.getFolderPath());
+        
     }//GEN-LAST:event_outputFolderBrowseButtonActionPerformed
 
     private void transformButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transformButtonActionPerformed
@@ -302,7 +304,7 @@ public class GuiRunner extends javax.swing.JDialog {
     }//GEN-LAST:event_transformButtonActionPerformed
 
     private void loadFilesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadFilesButtonActionPerformed
-        DirChooser dirChooser=new DirChooser();
+        DirChooser dirChooser=new DirChooser(true);
         Multimap<X3MLResourceType,Pair<File,String>> loadedFiles=Utils.identifyFileResources(dirChooser.getSelectedFiles());
         loadedFilesTextLabel.setText(Utils.beautifyFileResourcesLabels(loadedFiles));
     }//GEN-LAST:event_loadFilesButtonActionPerformed

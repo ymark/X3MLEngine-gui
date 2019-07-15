@@ -13,10 +13,24 @@ import javax.swing.JPanel;
 public class DirChooser extends JPanel{
     private final JFileChooser dirChooser;
     
-    public DirChooser(){
+    public DirChooser(boolean selectFiles){
         this.dirChooser=new JFileChooser();
-        this.dirChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        this.dirChooser.setMultiSelectionEnabled(true);
+        if(selectFiles){
+            this.dirChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+            this.dirChooser.setMultiSelectionEnabled(true);
+        }else{
+            this.dirChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            this.dirChooser.setMultiSelectionEnabled(false);
+        }
+    }
+    
+    public String getFolderPath(){
+        int retVal=this.dirChooser.showOpenDialog(this);
+        if(retVal==JFileChooser.APPROVE_OPTION){
+            return dirChooser.getSelectedFile().getAbsolutePath();
+        }else{
+            return "";
+        }
     }
     
     public Collection<String> getSelectedPaths(){
