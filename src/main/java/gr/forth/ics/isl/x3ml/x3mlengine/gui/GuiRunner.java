@@ -5,6 +5,7 @@
  */
 package gr.forth.ics.isl.x3ml.x3mlengine.gui;
 
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import java.io.File;
 import java.util.stream.Collectors;
@@ -24,6 +25,7 @@ public class GuiRunner extends javax.swing.JDialog {
      */
     public GuiRunner(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        this.selectedResources=HashMultimap.create();
         initComponents();
     }
 
@@ -369,7 +371,7 @@ public class GuiRunner extends javax.swing.JDialog {
 
     private void loadFilesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadFilesButtonActionPerformed
         DirChooser dirChooser=new DirChooser(true);
-        this.selectedResources=Utils.identifyFileResources(dirChooser.getSelectedFiles());
+        this.selectedResources.putAll(Utils.identifyFileResources(dirChooser.getSelectedFiles()));
         loadedFilesTextLabel.setText(Utils.beautifyFileResourcesLabels(this.selectedResources));
         if(this.selectedResources.containsKey(X3MLResourceType.X3ML_MAPPINGS) && this.selectedResources.containsKey(X3MLResourceType.XML_INPUT)){
             this.transformButton.setEnabled(true);

@@ -84,9 +84,4 @@ public class Utils {
             throw new GenericException("An error occured while parsing XML file "+file.getAbsolutePath()+" Skipping this file. ",ex);
         }
     }
-    
-    public static void main(String[] args){
-        File dir=new File("C:/Repositories/Github/X3MLEngine-GUI/test/");
-        System.out.println(identifyFileResources(Arrays.asList(dir.listFiles())));
-    }
 }
