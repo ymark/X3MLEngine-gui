@@ -102,8 +102,6 @@ public class GuiRunner extends javax.swing.JDialog {
 
         outputFormatComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "RDF", "N3", "TRIG" }));
 
-        outputFolderTextField.setText("jTextField2");
-
         outputFolderBrowseButton.setText("...");
         outputFolderBrowseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -282,7 +280,11 @@ public class GuiRunner extends javax.swing.JDialog {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void clearMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearMenuItemActionPerformed
-        // TODO add your handling code here:
+        loadedFilesTextLabel.setText("");
+        uuidSizeTextField.setText("Default");
+        outputFormatComboBox.setSelectedIndex(0);
+        outputFolderTextField.setText("");
+        resultsLabel.setText("");
     }//GEN-LAST:event_clearMenuItemActionPerformed
 
     private void outputFolderBrowseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputFolderBrowseButtonActionPerformed
