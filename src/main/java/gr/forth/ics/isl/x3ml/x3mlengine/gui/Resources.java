@@ -28,4 +28,6 @@ public class Resources {
  
     /* X3ML Resources */
     public static final String OUTPUT="output";
+    public static final String X3ML_ENGINE_VERSION_USED="1.9.3-SNAPSHOT";
+    public static final String X3ML_ENGINE_URL="https://github.com/isl/x3ml";
 }

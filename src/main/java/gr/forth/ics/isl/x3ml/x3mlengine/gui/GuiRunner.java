@@ -9,6 +9,8 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import java.io.File;
 import java.util.stream.Collectors;
+import javax.swing.Icon;
+import javax.swing.JOptionPane;
 import lombok.extern.log4j.Log4j;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -305,7 +307,7 @@ public class GuiRunner extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
-        //
+        JOptionPane.showMessageDialog(rootPane, "<HTML>X3ML Engine "+Resources.X3ML_ENGINE_VERSION_USED+"<br><a href="+Resources.X3ML_ENGINE_URL+">"+Resources.X3ML_ENGINE_URL+"</a></HTML>", "About X3ML Engine", JOptionPane.INFORMATION_MESSAGE, new javax.swing.ImageIcon(getClass().getResource("/gr/forth/ics/isl/x3ml/x3mlengine/icons/X3ML-Engine-logo-200px.png")));
     }//GEN-LAST:event_aboutMenuItemActionPerformed
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
