@@ -117,6 +117,7 @@ public class GuiRunner extends javax.swing.JDialog {
 
         transformButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gr/forth/ics/isl/x3ml/x3mlengine/icons/gears.png"))); // NOI18N
         transformButton.setText("Transform");
+        transformButton.setEnabled(false);
         transformButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 transformButtonActionPerformed(evt);
@@ -213,6 +214,7 @@ public class GuiRunner extends javax.swing.JDialog {
         resultsPanel.setViewportView(resultsLabel);
 
         fileMenu.setText("File");
+        fileMenu.setEnabled(false);
 
         clearMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, 0));
         clearMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gr/forth/ics/isl/x3ml/x3mlengine/icons/erase.png"))); // NOI18N
@@ -304,6 +306,8 @@ public class GuiRunner extends javax.swing.JDialog {
         outputFormatComboBox.setSelectedIndex(0);
         outputFolderTextField.setText("");
         resultsLabel.setText("");
+        this.transformButton.setEnabled(false);
+        this.transformMenuItem.setEnabled(false);
     }//GEN-LAST:event_clearMenuItemActionPerformed
 
     private void outputFolderBrowseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputFolderBrowseButtonActionPerformed
@@ -357,6 +361,13 @@ public class GuiRunner extends javax.swing.JDialog {
         DirChooser dirChooser=new DirChooser(true);
         this.selectedResources=Utils.identifyFileResources(dirChooser.getSelectedFiles());
         loadedFilesTextLabel.setText(Utils.beautifyFileResourcesLabels(this.selectedResources));
+        if(this.selectedResources.containsKey(X3MLResourceType.X3ML_MAPPINGS) && this.selectedResources.containsKey(X3MLResourceType.XML_INPUT)){
+            this.transformButton.setEnabled(true);
+            this.transformMenuItem.setEnabled(true);
+        }else{
+            this.transformButton.setEnabled(false);
+            this.transformMenuItem.setEnabled(false);
+        }
     }//GEN-LAST:event_loadFilesButtonActionPerformed
 
     private void transformMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transformMenuItemActionPerformed
