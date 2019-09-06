@@ -158,6 +158,7 @@ public class GuiRunner extends javax.swing.JDialog {
         loadedFilesTextLabel.getAccessibleContext().setAccessibleName("text");
 
         showErrorsCheckBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        showErrorsCheckBox.setSelected(true);
         showErrorsCheckBox.setText("Show Errors");
         showErrorsCheckBox.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         showErrorsCheckBox.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
